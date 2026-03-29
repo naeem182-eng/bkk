@@ -1,0 +1,36 @@
+# 🔐 ENV
+.env
+.env.local
+.env.*.local
+
+# 📦 Node modules
+node_modules/
+
+# 📝 Logs
+*.log
+log.txt
+
+# 🧪 Debug / temp
+tmp/
+temp/
+*.tmp
+
+# 🧠 OS files
+.DS_Store
+Thumbs.db
+
+# 🧾 Playwright
+playwright-report/
+test-results/
+
+# ⚙️ Build / cache
+dist/
+build/
+.cache/
+
+# 🧪 Coverage
+coverage/
+
+# IDE
+.vscode/
+.idea/
