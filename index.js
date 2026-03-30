@@ -193,13 +193,13 @@ async function runBot() {
 
         const parsedDate = parseThaiDate(updateDate);
 
-        let isRecent = false;
+        let isRecentProfile = false;
         if (parsedDate) {
           const now = new Date();
           const diffMonth =
             (now.getFullYear() - parsedDate.getFullYear()) * 12 +
             (now.getMonth() - parsedDate.getMonth());
-          isRecent = diffMonth <= 6;
+          isRecentProfile = diffMonth <= 6;
         }
 
         const addressMatch = resumeText.match(/(.+(ปทุมธานี|ลำลูกกา))/);
@@ -236,7 +236,7 @@ async function runBot() {
         };
 
         // ✅ ALL (ไม่จำกัด)
-        if (isYesterday(applyDate) && email && !seen.has(email)) {
+        if (isRecent(applyDate) && email && !seen.has(email)) {
           seen.add(email);
           allData.push(dataObj);
         }
@@ -245,7 +245,7 @@ async function runBot() {
         if (
           filtered.length < 10 &&
           score && score >= 80 &&
-          isPathum && isRecent
+          isPathum && isRecentProfile
         ) {
           filtered.push(dataObj);
         }
