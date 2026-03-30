@@ -10,11 +10,6 @@ const PAGE = process.env.PAGE;
 
 const API_KEY = process.env.API_KEY;
 
-await axios.post(`${SHEET_URL}?key=${API_KEY}`, {
-  all: allData,
-  filtered: filtered
-});
-
 // =============================
 // 🧠 Utils
 // =============================
@@ -278,14 +273,13 @@ async function runBot() {
     console.log("ALL:", allData.length);
     console.log("FILTERED:", filtered.length);
 
-    await axios.post(SHEET_URL, {
-      all: allData,
-      filtered: filtered
-    });
+    await axios.post(`${SHEET_URL}?key=${API_KEY}`, {
+    all: allData,
+    filtered: filtered
+  });
 
-    console.log("SEND DONE");
-
-  } catch (err) {
+  console.log("SEND DONE");
+} catch (err) {
     console.log("ERROR:", err.message);
   }
 

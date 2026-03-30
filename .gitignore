@@ -34,3 +34,5 @@ coverage/
 # IDE
 .vscode/
 .idea/
+
+.md
