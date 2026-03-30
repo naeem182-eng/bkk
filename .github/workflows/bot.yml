@@ -2,7 +2,7 @@ name: Run Bot
 
 on:
   schedule:
-    - cron: '0 2 * * *'  # 9 โมงไทย
+    - cron: '0 0 * * *'  # 9 โมงไทย
   workflow_dispatch:
 
 jobs:
@@ -19,11 +19,12 @@ jobs:
       - run: npm install
       - run: npx playwright install chromium
 
-      - run: node index.js
+      - name: Run bot
+        run: node index.js
         env:
-          SHEET_URL: ${{ secrets.SHEET_URL }}
-          JOBBKK_USER: ${{ secrets.JOBBKK_USER }}
-          JOBBKK_PASS: ${{ secrets.JOBBKK_PASS }}
-          WEB: ${{ secrets.WEB }}
-          PAGE: ${{ secrets.PAGE }}
-          API_KEY: ${{ secrets.API_KEY }}
+        SHEET_URL: ${{ secrets.SHEET_URL }}
+        JOBBKK_USER: ${{ secrets.JOBBKK_USER }}
+        JOBBKK_PASS: ${{ secrets.JOBBKK_PASS }}
+        WEB: ${{ secrets.WEB }}
+        PAGE: ${{ secrets.PAGE }}
+        API_KEY: ${{ secrets.API_KEY }}
