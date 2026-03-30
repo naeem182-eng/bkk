@@ -9,7 +9,6 @@ const USERNAME = process.env.JOBBKK_USER;
 const PASSWORD = process.env.JOBBKK_PASS;
 const WEB = process.env.WEB;
 const PAGE = process.env.PAGE;
-
 const API_KEY = process.env.API_KEY;
 
 // =============================
@@ -21,7 +20,7 @@ async function handlePopup(page) {
   await page.locator('[class*="close"]').click().catch(() => {});
 }
 
-// 🔥 แก้ตรงนี้สำคัญสุด
+// ✅ วันนี้ + เมื่อวาน (แม่นจริง)
 function isRecent(dateStr) {
   if (!dateStr) return false;
 
@@ -105,15 +104,18 @@ async function login(page) {
 async function runBot() {
 
   const browser = await chromium.launch({
-  headless: true,
-  args: ["--no-sandbox", "--disable-setuid-sandbox"]
-});
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+  });
+
   const context = await browser.newContext();
   const page = await context.newPage();
 
   const allData = [];
   const filtered = [];
   const seen = new Set();
+
+  let oldCount = 0; // ✅ FIX: ต้องประกาศตรงนี้
 
   console.log("START BOT");
 
@@ -144,17 +146,28 @@ async function runBot() {
 
         console.log("DATE:", applyDate);
 
-        // 🔥 หยุดเมื่อเจอวันเก่า (แต่ต้องมี applyDate ก่อน)
+        // ✅ เจอวันเก่า → นับ
         if (applyDate && !isRecent(applyDate)) {
-          console.log("เจอวันเก่า → หยุด");
-          shouldStop = true;
-          break;
+          oldCount++;
+
+          if (oldCount >= 5) {
+            console.log("เจอวันเก่าหลายตัว → หยุด");
+            shouldStop = true;
+            break;
+          }
+
+          continue;
         }
+
+        // ✅ รีเซ็ตเมื่อเจอของใหม่
+        oldCount = 0;
 
         const linkEl = row.locator('a').first();
         if (await linkEl.count() === 0) continue;
 
         const name = await linkEl.innerText().catch(() => '');
+
+        // ❗ FIX: ถ้าเป็น email = ข้อมูลไม่ครบ → ข้าม
         if (!name || name.includes('@') || name.split(' ').length < 2) continue;
 
         const lines = text.split('\n').map(t => t.trim()).filter(Boolean);
@@ -240,17 +253,18 @@ async function runBot() {
           ลิงค์: newPage.url()
         };
 
-        // ✅ ALL (ไม่จำกัด)
+        // ✅ ALL
         if (isRecent(applyDate) && email && !seen.has(email)) {
           seen.add(email);
           allData.push(dataObj);
         }
 
-        // ✅ FILTER (จำกัด 10)
+        // ✅ FILTER
         if (
           filtered.length < 10 &&
           score && score >= 80 &&
-          isPathum && isRecentProfile
+          isPathum &&
+          isRecentProfile
         ) {
           filtered.push(dataObj);
         }
@@ -276,23 +290,18 @@ async function runBot() {
     console.log("FILTERED:", filtered.length);
 
     await axios.post(`${SHEET_URL}?key=${API_KEY}`, {
-    all: allData,
-    filtered: filtered
-  });
+      all: allData,
+      filtered: filtered
+    });
 
-  console.log("SEND DONE");
-} catch (err) {
+    console.log("SEND DONE");
+
+  } catch (err) {
     console.log("ERROR:", err.message);
   }
 
   await browser.close();
 }
+
 console.log("BOT FILE LOADED");
-
-// async function runBot() {
-//   console.log("START BOT");
-// }
-
-// if (require.main === module) {
-  runBot();
-// }
+runBot();
