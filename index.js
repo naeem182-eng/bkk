@@ -293,10 +293,10 @@ async function runBot() {
 }
 console.log("BOT FILE LOADED");
 
-async function runBot() {
-  console.log("START BOT");
-}
+// async function runBot() {
+//   console.log("START BOT");
+// }
 
-if (require.main === module) {
+// if (require.main === module) {
   runBot();
-}
+// }
