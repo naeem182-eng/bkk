@@ -22,27 +22,19 @@ async function handlePopup(page) {
 }
 
 // 🔥 แก้ตรงนี้สำคัญสุด
-function isYesterday(dateStr) {
+function isRecent(dateStr) {
   if (!dateStr) return false;
 
   let [day, month, year] = dateStr.split("/").map(Number);
-
-  // 🔥 แปลง พ.ศ. → ค.ศ.
-  if (year > 2500) {
-    year -= 543;
-  }
+  if (year > 2500) year -= 543;
 
   const apply = new Date(year, month - 1, day);
 
   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" }));
-  const yesterday = new Date(now);
-  yesterday.setDate(now.getDate() - 1);
 
-  return (
-    apply.getDate() === yesterday.getDate() &&
-    apply.getMonth() === yesterday.getMonth() &&
-    apply.getFullYear() === yesterday.getFullYear()
-  );
+  const diffDays = Math.floor((now - apply) / (1000 * 60 * 60 * 24));
+
+  return diffDays <= 1; // วันนี้ + เมื่อวาน
 }
 
 function parseThaiDate(dateStr) {
@@ -148,7 +140,7 @@ async function runBot() {
         console.log("DATE:", applyDate);
 
         // 🔥 หยุดเมื่อเจอวันเก่า (แต่ต้องมี applyDate ก่อน)
-        if (applyDate && !isYesterday(applyDate)) {
+        if (applyDate && !isRecent(applyDate)) {
           console.log("เจอวันเก่า → หยุด");
           shouldStop = true;
           break;
