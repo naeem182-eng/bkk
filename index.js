@@ -1,3 +1,5 @@
+console.log("RUNNING FILE:", __filename);
+
 const { chromium } = require("playwright");
 const axios = require("axios");
 require("dotenv").config();
