@@ -290,28 +290,7 @@ async function runBot() {
   await browser.close();
 }
 
-// run
-// const express = require("express");
-// const app = express();
-
-// app.get("/", (req, res) => {
-//   res.send("Bot is alive");
-// });
-
-// app.get("/run", async (req, res) => {
-//   try {
-//     await runBot();
-//     res.send("RUN SUCCESS");
-//   } catch (err) {
-//     res.status(500).send(err.message);
-//   }
-// });
-
-// const PORT = process.env.PORT || 3000;
-
-// app.listen(PORT, () => {
-//   console.log("Server running on port " + PORT);
-// });
+console.log("BOT FILE LOADED");
 
 if (require.main === module) {
   runBot();

@@ -1,4 +1,4 @@
-const { chromium } = require("playwright");
+<!-- const { chromium } = require("playwright");
 const axios = require("axios");
 require('dotenv').config();
 const fs = require('fs');
@@ -256,4 +256,4 @@ async function login(page) {
 
   await browser.close();
 
-})();
+})(); -->
