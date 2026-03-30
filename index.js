@@ -289,8 +289,11 @@ async function runBot() {
 
   await browser.close();
 }
-
 console.log("BOT FILE LOADED");
+
+async function runBot() {
+  console.log("START BOT");
+}
 
 if (require.main === module) {
   runBot();
