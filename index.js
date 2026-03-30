@@ -1,4 +1,4 @@
-const { chromium } = require("playwright");
+const { chromium } = require("playwright-core");
 const axios = require("axios");
 require("dotenv").config();
 
@@ -107,6 +107,7 @@ async function runBot() {
 
   const browser = await chromium.launch({
   headless: true,
+  executablePath: "/usr/bin/chromium",
   args: ["--no-sandbox", "--disable-setuid-sandbox"]
 });
   const context = await browser.newContext();
