@@ -107,11 +107,6 @@ async function login(page) {
 // =============================
 async function runBot() {
 
-  const browser = await chromium.launch({
-  headless: true,
-  executablePath: "/usr/bin/chromium",
-  args: ["--no-sandbox", "--disable-setuid-sandbox"]
-});
   const context = await browser.newContext();
   const page = await context.newPage();
 
