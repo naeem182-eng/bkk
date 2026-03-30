@@ -30,11 +30,16 @@ function isRecent(dateStr) {
 
   const apply = new Date(year, month - 1, day);
 
-  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" }));
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  const diffDays = Math.floor((now - apply) / (1000 * 60 * 60 * 24));
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
 
-  return diffDays <= 1; // วันนี้ + เมื่อวาน
+  return (
+    apply.getTime() === today.getTime() ||
+    apply.getTime() === yesterday.getTime()
+  );
 }
 
 function parseThaiDate(dateStr) {
