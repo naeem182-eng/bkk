@@ -289,10 +289,12 @@ async function runBot() {
     console.log("ALL:", allData.length);
     console.log("FILTERED:", filtered.length);
 
-    await axios.post(`${SHEET_URL}?key=${API_KEY}`, {
+    const res = await axios.post(`${SHEET_URL}?key=${API_KEY}`, {
       all: allData,
       filtered: filtered
     });
+
+    console.log("RESPONSE:", res.data);
 
     console.log("SEND DONE");
 
