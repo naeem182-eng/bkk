@@ -114,7 +114,7 @@ async function login(page) {
         const text = await row.innerText().catch(() => null);
         if (!text) continue;
 
-        // 🔹 split lines (ใช้ดึง position + exp)
+        //  split lines (ใช้ดึง position + exp)
         const lines = text.split('\n').map(t => t.trim()).filter(Boolean);
 
         const position = lines[1] || null;
@@ -124,7 +124,7 @@ async function login(page) {
 
         if (score < 80) continue;
 
-        // 🔹 age + experience จาก list
+        //  age + experience จาก list
         let age = null;
         let experience = null;
 
@@ -153,12 +153,12 @@ async function login(page) {
 
         const resumeText = await newPage.innerText('body');
 
-        // 🔥 filter จังหวัด
+        //  filter จังหวัด
         const isPathum =
           resumeText.includes("ปทุมธานี") ||
           resumeText.includes("ลำลูกกา");
 
-        // 🔥 update
+        //  update
         const updateMatch = resumeText.match(/อัพเดตข้อมูลล่าสุด\s*:\s*(.+)/);
         const updateDate = updateMatch ? updateMatch[1].trim() : null;
 
@@ -181,7 +181,7 @@ async function login(page) {
 
         selected++;
 
-        // 🔹 address (ปทุมธานี)
+        //  address (ปทุมธานี)
         const addressMatch = resumeText.match(/(.+(ปทุมธานี|ลำลูกกา))/);
         const address = addressMatch ? addressMatch[1].trim() : null;
 

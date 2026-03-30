@@ -254,8 +254,8 @@ async function runBot() {
         };
 
         // ✅ ALL
-        if (isRecent(applyDate) && email && !seen.has(email)) {
-          seen.add(email);
+        if (isRecent(applyDate) && !seen.has(dataObj["ลิงค์"])) {
+          seen.add(dataObj["ลิงค์"]);
           allData.push(dataObj);
         }
 

@@ -1,7 +1,7 @@
 # 📄 JobBKK Resume Scraper (Playwright + Google Sheet)
 
 ระบบดึงข้อมูลผู้สมัครจาก JobBKK (iCMS) อัตโนมัติ
-พร้อมกรองเฉพาะ:
+พร้อมกรองเฉพาะ:เช่น
 
 * Resume Score ≥ 80%
 * อยู่ใน “ปทุมธานี / ลำลูกกา”
