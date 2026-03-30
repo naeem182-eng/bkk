@@ -108,7 +108,7 @@ async function runBot() {
   const browser = await chromium.launch({
   headless: true,
   args: ["--no-sandbox", "--disable-setuid-sandbox"]
-})
+});
   const context = await browser.newContext();
   const page = await context.newPage();
 
@@ -290,6 +290,24 @@ async function runBot() {
 }
 
 // run
-if (require.main === module) {
-  runBot();
-}
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Bot is alive");
+});
+
+app.get("/run", async (req, res) => {
+  try {
+    await runBot();
+    res.send("RUN SUCCESS");
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
