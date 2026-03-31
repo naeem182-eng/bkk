@@ -2,7 +2,7 @@ name: Run Bot
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 9 โมงไทย
+    - cron: '0 0 * * *'  # 7 โมงไทย
   workflow_dispatch:
 
 jobs:
